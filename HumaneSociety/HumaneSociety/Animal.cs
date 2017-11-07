@@ -13,7 +13,7 @@ namespace HumaneSociety
         public string name; 
         public bool innoculated;
         public string gender;
-        private double adoptionFee;
+        public double adoptionFee;
         public string assignedRoom;
 
         //constructor

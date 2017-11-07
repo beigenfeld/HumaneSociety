@@ -11,7 +11,7 @@ namespace HumaneSociety
         //member variables
         public string roomNumber;
         public bool occupied = false;
-        Animal occupiedBy;
+        public Animal occupiedBy;
 
         //constructor
         public Room()

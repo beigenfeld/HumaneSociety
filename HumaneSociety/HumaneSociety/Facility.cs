@@ -10,9 +10,11 @@ namespace HumaneSociety
     {
         //member variables
         private string facilityName;
-        List<string> roomNames = new List<string> { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
-        List<Room> availableRooms = new List<Room>();
-        List<Animal> animalList = new List<Animal>();
+        public double register = 0;
+        private List<string> roomNames = new List<string> { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+        public List<Room> roomList = new List<Room>();
+        private List<Room> availableRooms = new List<Room>();
+        public List<Animal> animalList = new List<Animal>();
 
         //constructor
         public Facility()
@@ -24,7 +26,8 @@ namespace HumaneSociety
         public void Run()
         {
             SetUpRooms();
-            ShowAvilableRooms();
+            //ShowAvilableRooms();
+            //ShowRoomOccupation();
             //RegisterAnimals();
             //BeginAdoption();
         }
@@ -36,6 +39,7 @@ namespace HumaneSociety
                 Room room = new Room();
                 room.roomNumber = item;
                 availableRooms.Add(room);
+                roomList.Add(room);
             }
         }
 
@@ -59,7 +63,20 @@ namespace HumaneSociety
             }
         }
 
-
+        private void ShowRoomOccupation()
+        {
+            foreach (Room room in roomList)
+            {
+                if (room.occupied)
+                {
+                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, room.occupiedBy);
+                }
+                else if (room.occupied == false)
+                {
+                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, "vacant");
+                }
+            }
+        }
 
 
 

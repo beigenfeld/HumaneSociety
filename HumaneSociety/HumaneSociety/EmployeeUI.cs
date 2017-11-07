@@ -9,7 +9,6 @@ namespace HumaneSociety
     class EmployeeUI
     {
         //member variables
-        private string employeeNumber;
 
         //constructor
         public EmployeeUI()
@@ -18,6 +17,13 @@ namespace HumaneSociety
         }
 
         //member methods
+
+        public void ChooseAction()
+        {
+            Console.WriteLine("What would you like to do?");
+            Console.WriteLine("[1] Add Animal\n[2] Finalize an Adoption\n [3] \n[4] \n[5]");
+        }
+
         private void AddAnimal(List<Room> availableRooms)
         {
             Animal newAnimal;
@@ -58,9 +64,10 @@ namespace HumaneSociety
             }
         }
 
-        private void FinalizeAdoption()
+        private void FinalizeAdoption(Facility facility, Animal animal)
         {
-
+            facility.animalList.Remove(animal);
+            facility.register += animal.adoptionFee;
         }
 
         private void CollectPayment()
@@ -154,7 +161,7 @@ namespace HumaneSociety
             }
         }
 
-
+        
 
 
 
