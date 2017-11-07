@@ -8,5 +8,15 @@ namespace HumaneSociety
 {
     class Room
     {
+        //member variables
+        public string roomNumber;
+        public bool occupied = false;
+        Animal occupiedBy;
+
+        //constructor
+        public Room()
+        {
+
+        }
     }
 }

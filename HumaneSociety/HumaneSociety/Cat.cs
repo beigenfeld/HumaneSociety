@@ -10,15 +10,21 @@ namespace HumaneSociety
     {
         //member variables
         private string breed = "Evil";
+        private double adoptionFee = 25;
 
         //constructor
         public Cat()
         {
-
+            type = "Cat";
         }
 
         //member methods
         private void BeEvil()
+        {
+
+        }
+
+        private void TryToTakeOverTheWorld()
         {
 
         }

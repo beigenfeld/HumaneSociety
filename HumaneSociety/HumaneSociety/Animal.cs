@@ -9,9 +9,32 @@ namespace HumaneSociety
     class Animal
     {
         //member variables
-        private string name;
-        private bool innoculated;
-        private string sex;
+        public string type;
+        public string name; 
+        public bool innoculated;
+        public string gender;
         private double adoptionFee;
+        public string assignedRoom;
+
+        //constructor
+        public Animal()
+        {
+
+        }
+
+        //member methods
+        private void Eat()
+        {
+
+        }
+
+
+
+
+
+
+
+
+
     }
 }

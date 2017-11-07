@@ -9,6 +9,7 @@ namespace HumaneSociety
     class AdopterUI
     {
         //member variables
+        private string name;
 
         //constructor
         public AdopterUI()
@@ -22,9 +23,9 @@ namespace HumaneSociety
 
         }
 
-        private void FindAPet()
+        private void FindAPet(Facility facility, List<Animal> currentAnimals)
         {
-            //use get feature to get animal info
+            facility.ShowCurrentAnimals(currentAnimals);
         }
 
 

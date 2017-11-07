@@ -10,6 +10,12 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
+
+            Facility humaneSociety = new Facility();
+            humaneSociety.Run();
+
+            Console.ReadLine();
+
         }
     }
 }

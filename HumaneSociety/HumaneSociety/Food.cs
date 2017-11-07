@@ -8,5 +8,7 @@ namespace HumaneSociety
 {
     class Food
     {
+        public int cansOfDogFood;
+        public int cansOfCatFood;
     }
 }
