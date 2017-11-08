@@ -10,11 +10,13 @@ namespace HumaneSociety
     {
         //member variables
         private string facilityName;
+        public double adoptionFee;
         public double register = 0;
         private List<string> roomNames = new List<string> { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
         public List<Room> roomList = new List<Room>();
-        private List<Room> availableRooms = new List<Room>();
+        public List<Room> availableRooms = new List<Room>();
         public List<Animal> animalList = new List<Animal>();
+        public bool paymentReceived = false;
 
         //constructor
         public Facility()
@@ -26,8 +28,9 @@ namespace HumaneSociety
         public void Run()
         {
             SetUpRooms();
-            //ShowAvilableRooms();
-            //ShowRoomOccupation();
+            ShowAvilableRooms();
+            ShowRoomOccupation();
+            AddAnimal();
             //RegisterAnimals();
             //BeginAdoption();
         }

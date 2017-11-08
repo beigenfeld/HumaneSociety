@@ -10,20 +10,24 @@ namespace HumaneSociety
     {
         //member variables
         public string type;
-        public string name; 
+        public string breed;
+        public string name;
+        public int animalID = 0;
         public bool innoculated;
         public string gender;
         public double adoptionFee;
         public string assignedRoom;
+        public bool adoptionStatus;
+        public string adoptedBy;
 
         //constructor
         public Animal()
         {
-
+            adoptionStatus = false;
         }
 
         //member methods
-        private void Eat()
+        public virtual void Eat()
         {
 
         }

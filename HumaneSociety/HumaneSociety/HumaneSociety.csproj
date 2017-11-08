@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adopter.cs" />
     <Compile Include="AdopterUI.cs" />
     <Compile Include="Animal.cs" />
     <Compile Include="Cat.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Dog.cs" />
+    <Compile Include="Employee.cs" />
     <Compile Include="Facility.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="Program.cs" />

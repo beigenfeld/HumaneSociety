@@ -9,11 +9,7 @@ namespace HumaneSociety
     class AdopterUI
     {
         //member variables
-        private string firstName;
-        private string lastName;
-        private string address;
-        private string username;
-        private string password;
+        
 
         //constructor
         public AdopterUI()
@@ -24,11 +20,13 @@ namespace HumaneSociety
         //member methods
         private void CreateNewProfile()
         {
-            firstName = GetFirstName();
-            lastName = GetLastName();
-            address = GetAddress();
-            username = CreateUsername();
-        
+            Adopter adopter = new Adopter();
+            adopter.firstName = GetFirstName();
+            adopter.lastName = GetLastName();
+            adopter.address = GetAddress();
+            adopter.username = CreateUsername();
+            adopter.password = CreatePassword();
+            //AddAdopterToDatabase();
         }
 
         private void FindAPet(Facility facility, List<Animal> currentAnimals)

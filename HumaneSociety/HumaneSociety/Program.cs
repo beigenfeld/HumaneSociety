@@ -14,7 +14,6 @@ namespace HumaneSociety
             Facility humaneSociety = new Facility();
             humaneSociety.Run();
 
-
             Console.ReadLine();
 
         }

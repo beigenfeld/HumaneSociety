@@ -9,13 +9,15 @@ namespace HumaneSociety
     class Cat : Animal
     {
         //member variables
-        private string breed = "Evil";
-        private double adoptionFee = 25;
+
+        private int weeklyFoodConsumption = 14;
 
         //constructor
         public Cat()
         {
             type = "Cat";
+            breed = "Evil";
+            adoptionFee = 25;
         }
 
         //member methods

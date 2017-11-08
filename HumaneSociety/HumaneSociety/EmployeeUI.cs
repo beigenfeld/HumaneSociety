@@ -18,10 +18,23 @@ namespace HumaneSociety
 
         //member methods
 
-        public void ChooseAction()
+        public void ChooseAction(Facility facility)
         {
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("[1] Add Animal\n[2] Finalize an Adoption\n [3] \n[4] \n[5]");
+            Console.WriteLine("[1] Add Animal\n[2] Track Innoculations \n [3] Collect Payment\n[4]Finalize an Adoption\n[5]");
+            string userInput = Console.ReadLine();
+            switch (userInput)
+            {
+                case "1":
+                    AddAnimal(facility.availableRooms);
+                    break;
+                case "2":
+                    TrackInnoculations(facility);
+                    break;
+                case "3":
+                    CollectPayment(facility, animal, adopter);
+                    break;
+            }
         }
 
         private void AddAnimal(List<Room> availableRooms)
@@ -31,8 +44,10 @@ namespace HumaneSociety
             newAnimal = GetAnimalType();
             GetAnimalName(newAnimal);
             GetAnimalGender(newAnimal);
-            GetAnimalInnoculationStatus(newAnimal);
+            SetAnimalInnoculationStatus(newAnimal);
             AssignAnimalToRoom(availableRooms, newAnimal);
+            newAnimal.animalID++;
+            //AddAnimalToDatabase();
         }
 
         private void AssignAnimalToRoom(List<Room> availableRooms, Animal animal)
@@ -64,25 +79,30 @@ namespace HumaneSociety
             }
         }
 
-        private void FinalizeAdoption(Facility facility, Animal animal)
+        private void FinalizeAdoption(Facility facility, Adopter adopter, Animal animal)
         {
+            if (facility.paymentReceived == true && animal.innoculated == true)
             facility.animalList.Remove(animal);
-            facility.register += animal.adoptionFee;
+            animal.adoptionStatus = true;
+            animal.adoptedBy = adopter.username;
         }
 
-        private void CollectPayment()
+        private void CollectPayment(Facility facility)
         {
-
+            facility.register += facility.adoptionFee;
         }
 
-        private void TrackInnoculations()
+        private void TrackInnoculations(Facility facility)
         {
-
+            foreach (Animal item in facility.animalList)
+            {
+                Console.WriteLine();
+            }
         }
 
         private void AcceptTransfers()
         {
-
+            //import csv file
         }
 
         private void OrderFood(Food food)
@@ -142,7 +162,7 @@ namespace HumaneSociety
             }
         }
 
-        private void GetAnimalInnoculationStatus(Animal newAnimal)
+        private void SetAnimalInnoculationStatus(Animal newAnimal)
         {
             Console.WriteLine("Innoculation status: [1] Innoculated  [2] Not innoculated");
             string userInput = Console.ReadLine();
@@ -156,14 +176,41 @@ namespace HumaneSociety
                     break;
                 default:
                     Console.WriteLine("Invalid Entry.  Enter '1' or '2'");
-                    GetAnimalInnoculationStatus(newAnimal);
+                    SetAnimalInnoculationStatus(newAnimal);
                     break;
             }
         }
 
-        
+        private Animal IdentifyAnimal(Facility facility)
+        {
+            for (int i = 0; i < facility.animalList.Count; i++)
+            {
+                Console.WriteLine("{0}) {1}, ID {3}", i + 1, facility.animalList[i].name, facility.animalList[i].animalID);
+            }
+            Console.WriteLine("Please select the animal based on the ID number in the list above.");
+            string userInput = Console.ReadLine();
+            int numValue;
+            bool parsed = Int32.TryParse(userInput, out numValue);
+            if (!parsed)
+            {
+                Console.WriteLine("Invalid entry; please try again. Could not parse '{0}' to an int.\n", userInput);
+                return IdentifyAnimal(facility);
+            }
+            else
+            {
+                for (int i = 0; i < facility.animalList.Count; i++)
+                {
+                    if (numValue == facility.animalList[i].animalID)
+                    {
+                        return facility.animalList[i];
+                    }
+                }
+            }
+            Console.WriteLine("Animal not found at this facility");
+            return IdentifyAnimal(facility);
+        }
 
-
+       
 
 
 

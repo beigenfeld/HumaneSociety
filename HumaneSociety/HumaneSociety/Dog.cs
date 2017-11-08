@@ -9,15 +9,16 @@ namespace HumaneSociety
     class Dog : Animal
     {
         //member variables
-        private string type = "Dog";
-        private string breed;
-        private double adoptionFee = 50;
+        private int weeklyFoodConsumption = 14;
 
         //constructor
         public Dog()
         {
             type = "Dog";
+            breed = "Awesome";
+            adoptionFee = 50;
         }
+
 
         //member methods
         private void WagTail()
