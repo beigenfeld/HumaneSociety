@@ -10,7 +10,6 @@ namespace HumaneSociety
     {
         //member variables
         private string facilityName;
-        public double adoptionFee;
         public double register = 0;
         private List<string> roomNames = new List<string> { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
         public List<Room> roomList = new List<Room>();
@@ -28,11 +27,10 @@ namespace HumaneSociety
         public void Run()
         {
             SetUpRooms();
+            ChooseUserType();
             ShowAvilableRooms();
             ShowRoomOccupation();
-            AddAnimal();
-            //RegisterAnimals();
-            //BeginAdoption();
+            //AddAnimal();
         }
 
         private void SetUpRooms()
@@ -81,7 +79,22 @@ namespace HumaneSociety
             }
         }
 
-
+        private void ChooseUserType()
+        {
+            Console.WriteLine("Are you an [1] Employee  [2] Adopter");
+            userInput = Console.ReadLine();
+            switch ()
+            {
+                case "1":
+                    break;
+                case "2":
+                    break;
+                default:
+                    Console.WriteLine("Invalis entry.  Please enter '1' or '2'");
+                    break;
+            }
+            
+        }
 
 
 

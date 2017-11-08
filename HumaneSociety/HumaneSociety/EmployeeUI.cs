@@ -26,32 +26,34 @@ namespace HumaneSociety
             switch (userInput)
             {
                 case "1":
-                    AddAnimal(facility.availableRooms);
+                    AddAnimal(facility);
                     break;
                 case "2":
                     TrackInnoculations(facility);
                     break;
                 case "3":
-                    CollectPayment(facility, animal, adopter);
+                    Animal animal = IdentifyAnimal(facility);
+                    CollectPayment(facility, animal);
                     break;
             }
         }
 
-        private void AddAnimal(List<Room> availableRooms)
+        private void AddAnimal(Facility facility)
         {
             Animal newAnimal;
             Console.WriteLine("Adding animal to the adoption system:");
             newAnimal = GetAnimalType();
-            GetAnimalName(newAnimal);
-            GetAnimalGender(newAnimal);
-            SetAnimalInnoculationStatus(newAnimal);
-            AssignAnimalToRoom(availableRooms, newAnimal);
+            newAnimal.name = GetAnimalName();
+            newAnimal.gender = GetAnimalGender();
+            newAnimal.innoculated = SetAnimalInnoculationStatus();
+            newAnimal.assignedRoom = AssignAnimalToRoom(facility.availableRooms);
             newAnimal.animalID++;
-            //AddAnimalToDatabase();
+            //AddAnimalToDatabase(newAnimal);
         }
 
-        private void AssignAnimalToRoom(List<Room> availableRooms, Animal animal)
+        private string AssignAnimalToRoom(List<Room> availableRooms)
         {
+            string assignedRoom = "";
             Console.WriteLine("Available rooms:");
             foreach (Room room in availableRooms)
             {
@@ -65,18 +67,21 @@ namespace HumaneSociety
                 {
                     availableRooms.Remove(room);
                     room.occupied = true;
-                    animal.assignedRoom = room.roomNumber;
+                    assignedRoom = room.roomNumber;
                 }
                 else if(availableRooms == null)
                 {
                     Console.WriteLine("Facility Full!  Please transfer to another facility.");
+                    assignedRoom = "";
                 }
                 else
                 {
                     Console.WriteLine("Room not available.  Please try again.");
-                    AssignAnimalToRoom(availableRooms, animal);
+                    AssignAnimalToRoom(availableRooms);
+                    assignedRoom = "";
                 }
             }
+            return assignedRoom;
         }
 
         private void FinalizeAdoption(Facility facility, Adopter adopter, Animal animal)
@@ -87,9 +92,9 @@ namespace HumaneSociety
             animal.adoptedBy = adopter.username;
         }
 
-        private void CollectPayment(Facility facility)
+        private void CollectPayment(Facility facility, Animal animal)
         {
-            facility.register += facility.adoptionFee;
+            facility.register += animal.adoptionFee;
         }
 
         private void TrackInnoculations(Facility facility)
@@ -136,49 +141,55 @@ namespace HumaneSociety
             return newAnimal;
         }
 
-        private void GetAnimalName(Animal newAnimal)
+        private string GetAnimalName()
         {
             Console.WriteLine("Animal name:");
-            string userInput = Console.ReadLine();
-            newAnimal.name = userInput;
+            string name = Console.ReadLine();
+            return name;
         }
 
-        public void GetAnimalGender(Animal newAnimal)
+        public string GetAnimalGender()
         {
             Console.WriteLine("Animal gender: [1] Male  [2] Female");
             string userInput = Console.ReadLine();
+            string gender = "";
             switch (userInput)
             {
+                
                 case "1":
-                    newAnimal.gender = "Male";
+                    gender = "Male";
                     break;
                 case "2":
-                    newAnimal.gender = "Female";
+                    gender = "Female";
                     break;
                 default:
                     Console.WriteLine("Invalid Entry.  Enter '1' or '2'");
-                    GetAnimalGender(newAnimal);
+                    GetAnimalGender();
                     break;
             }
+            return gender;
         }
 
-        private void SetAnimalInnoculationStatus(Animal newAnimal)
+        private bool SetAnimalInnoculationStatus()
         {
             Console.WriteLine("Innoculation status: [1] Innoculated  [2] Not innoculated");
             string userInput = Console.ReadLine();
+            bool innoculated = false;
             switch (userInput)
             {
                 case "1":
-                    newAnimal.innoculated = true;
+                    innoculated = true;
                     break;
                 case "2":
-                    newAnimal.innoculated = false;
+                    innoculated = false;
                     break;
                 default:
                     Console.WriteLine("Invalid Entry.  Enter '1' or '2'");
-                    SetAnimalInnoculationStatus(newAnimal);
+                    SetAnimalInnoculationStatus();
                     break;
             }
+            return innoculated;
+
         }
 
         private Animal IdentifyAnimal(Facility facility)

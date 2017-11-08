@@ -18,7 +18,7 @@ namespace HumaneSociety
         public double adoptionFee;
         public string assignedRoom;
         public bool adoptionStatus;
-        public string adoptedBy;
+        public Adopter adoptedBy;
 
         //constructor
         public Animal()
