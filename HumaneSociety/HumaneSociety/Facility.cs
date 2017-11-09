@@ -15,6 +15,7 @@ namespace HumaneSociety
         public List<Room> roomList = new List<Room>();
         public List<Room> availableRooms = new List<Room>();
         public List<Animal> animalList = new List<Animal>();
+        private List<Animal> animalTypeList;
         public bool paymentReceived = false;
 
         //constructor
@@ -27,9 +28,20 @@ namespace HumaneSociety
         public void Run()
         {
             SetUpRooms();
-            ChooseUserType();
+            string usertype = ChooseUserType();
+            if (usertype == "Employee")
+            {
+                EmployeeUI newInterface = new EmployeeUI();
+                newInterface.ChooseAction(this);
+            }
+            else if (usertype == "Adopter")
+            {
+                AdopterUI newInterface = new AdopterUI();
+                newInterface.CreateNewProfile();
+                newInterface.FindAPet(this);
+            }
             ShowAvilableRooms();
-            ShowRoomOccupation();
+            //ShowRoomOccupation();
             //AddAnimal();
         }
 
@@ -64,41 +76,71 @@ namespace HumaneSociety
             }
         }
 
-        private void ShowRoomOccupation()
-        {
-            foreach (Room room in roomList)
-            {
-                if (room.occupied)
-                {
-                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, room.occupiedBy);
-                }
-                else if (room.occupied == false)
-                {
-                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, "vacant");
-                }
-            }
-        }
+        
 
-        private void ChooseUserType()
+        private string ChooseUserType()
         {
-            Console.WriteLine("Are you an [1] Employee  [2] Adopter");
-            userInput = Console.ReadLine();
-            switch ()
+            Console.WriteLine("Are you an [1] Employee or [2] Adopter");
+            string usertype = "";
+            string userInput = Console.ReadLine();
+            switch (userInput)
             {
                 case "1":
+                    usertype = "Employee";
                     break;
                 case "2":
+                    usertype = "Adopter";
                     break;
                 default:
-                    Console.WriteLine("Invalis entry.  Please enter '1' or '2'");
+                    Console.WriteLine("Invalid entry.  Please enter '1' or '2'");
                     break;
             }
-            
+            return usertype;
         }
 
+        public List<Animal> SortAnimalsByType()
+        {
+            string animalType = SelectAnimalType();
+            List<Animal> animalTypeList = new List<Animal>();
+            foreach(Animal animal in animalList) 
+            {
+                if (animalType == animal.type)
+                {
+                    animalTypeList.Add(animal);
+                }
+            }
+            return animalTypeList;
+        }
 
+        public void DisplayAnimalTypeList(List<Animal> animalTypeList)
+        {
+            foreach(Animal animal in animalTypeList)
+            {
+                Console.WriteLine(animal.name + animal.breed);
+            }
+        }
 
+        public string SelectAnimalType()
+        {
 
+            Console.WriteLine("What kind of pet are you looking for?");
+            Console.WriteLine("[1] Cat\n[2] Dog");
+            string userInput = Console.ReadLine();
+            string animalType = "";
+            switch (userInput)
+            {
+                case "1":
+                    animalType = "Cat";
+                    break;
+                case "2":
+                    animalType = "Dog";
+                    break;
+                default:
+                    Console.WriteLine("Invalid entry.  Please enter '1' or '2'");
+                    break;
+            }
+            return animalType;
+        }
 
 
 

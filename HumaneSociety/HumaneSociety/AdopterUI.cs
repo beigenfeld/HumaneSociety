@@ -18,7 +18,7 @@ namespace HumaneSociety
         }
 
         //member methods
-        private void CreateNewProfile()
+        public void CreateNewProfile()
         {
             Adopter adopter = new Adopter();
             adopter.firstName = GetFirstName();
@@ -26,12 +26,27 @@ namespace HumaneSociety
             adopter.address = GetAddress();
             adopter.username = CreateUsername();
             adopter.password = CreatePassword();
-            //AddAdopterToDatabase();
+            AddAdopterToDatabase();
         }
 
-        private void FindAPet(Facility facility, List<Animal> currentAnimals)
+        public void FindAPet(Facility facility)
         {
-            facility.ShowCurrentAnimals(currentAnimals);
+            Console.WriteLine("[1] See all animals in this facility.");
+            Console.WriteLine("[2] Search by type of animal.");
+            string userInput = Console.ReadLine();
+            switch (userInput)
+            {
+                case "1":
+                    facility.ShowCurrentAnimals(facility.animalList);
+                    break;
+                case "2":
+                    List<Animal> animalTypeList = facility.SortAnimalsByType();
+                    facility.DisplayAnimalTypeList(animalTypeList);
+                    break;
+                default:
+                    Console.WriteLine("Invalid answer.  Please enter '1' or '2'");
+                    break;
+            }
         }
 
         private string GetFirstName()
@@ -39,7 +54,6 @@ namespace HumaneSociety
             Console.WriteLine("Please enter your first name:");
             string firstName = Console.ReadLine();
             return firstName;
-            
         }
 
         private string GetLastName()

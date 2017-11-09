@@ -21,7 +21,7 @@ namespace HumaneSociety
         public void ChooseAction(Facility facility)
         {
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("[1] Add Animal\n[2] Track Innoculations \n [3] Collect Payment\n[4]Finalize an Adoption\n[5]");
+            Console.WriteLine("[1] Add Animal\n [2] Show Rooms & Occupants \n[3] Track Innoculations \n[4] Collect Payment \n[5]Finalize an Adoption\n[5]");
             string userInput = Console.ReadLine();
             switch (userInput)
             {
@@ -29,9 +29,12 @@ namespace HumaneSociety
                     AddAnimal(facility);
                     break;
                 case "2":
-                    TrackInnoculations(facility);
+                    ShowRoomOccupation(facility);
                     break;
                 case "3":
+                    TrackInnoculations(facility);
+                    break;
+                case "4":
                     Animal animal = IdentifyAnimal(facility);
                     CollectPayment(facility, animal);
                     break;
@@ -63,17 +66,19 @@ namespace HumaneSociety
             string userInput = Console.ReadLine();
             foreach (Room room in availableRooms)
             {
-                if (userInput == room.roomNumber)
+
+                if (availableRooms == null)
+                {
+                    Console.WriteLine("Facility Full!  Please transfer to another facility.");
+                    assignedRoom = "";
+                }
+                else if (userInput == room.roomNumber)
                 {
                     availableRooms.Remove(room);
                     room.occupied = true;
                     assignedRoom = room.roomNumber;
                 }
-                else if(availableRooms == null)
-                {
-                    Console.WriteLine("Facility Full!  Please transfer to another facility.");
-                    assignedRoom = "";
-                }
+
                 else
                 {
                     Console.WriteLine("Room not available.  Please try again.");
@@ -89,7 +94,7 @@ namespace HumaneSociety
             if (facility.paymentReceived == true && animal.innoculated == true)
             facility.animalList.Remove(animal);
             animal.adoptionStatus = true;
-            animal.adoptedBy = adopter.username;
+            animal.adoptedBy = adopter;
         }
 
         private void CollectPayment(Facility facility, Animal animal)
@@ -221,7 +226,20 @@ namespace HumaneSociety
             return IdentifyAnimal(facility);
         }
 
-       
+        private void ShowRoomOccupation(Facility facility)
+        {
+            foreach (Room room in facility.roomList)
+            {
+                if (room.occupied)
+                {
+                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, room.occupiedBy);
+                }
+                else if (room.occupied == false)
+                {
+                    Console.WriteLine("Room: {0}, Occupied by: {1}", room.roomNumber, "vacant");
+                }
+            }
+        }
 
 
 
