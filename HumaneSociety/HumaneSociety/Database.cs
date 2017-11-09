@@ -34,18 +34,18 @@ namespace HumaneSociety
 
 
 
-        myCommand.Connection = myConnection;
+        //myCommand.Connection = myConnection;
 //The connection string can also be specified both ways using the SqlCommand.
 //CommandText property.Now lets look at our first SqlCommand. 
 //To keep it simple it will be a simple INSERT command.
 
-SqlCommand myCommand= new SqlCommand("INSERT INTO table (Column1, Column2) " +
-                                     "Values ('string', 1)", myConnection);
+//SqlCommand myCommand= new SqlCommand("INSERT INTO table (Column1, Column2) " +
+                                 //    "Values ('string', 1)", myConnection);
 
     // - or - 
 
-    myCommand.CommandText = "INSERT INTO table (Column1, Column2) " + 
-                        "Values ('string', 1)";
+   // myCommand.CommandText = "INSERT INTO table (Column1, Column2) " + 
+                       // "Values ('string', 1)";
 //Now we will take a look at the values.table is simply the table within the database.
 //Column1 and Column2 are merely the names of the columns.
 //Within the values section I demonstrated how to insert a string type and an int type value.

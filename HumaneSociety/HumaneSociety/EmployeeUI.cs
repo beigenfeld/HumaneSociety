@@ -21,7 +21,12 @@ namespace HumaneSociety
         public void ChooseAction(Facility facility)
         {
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("[1] Add Animal\n [2] Show Rooms & Occupants \n[3] Track Innoculations \n[4] Collect Payment \n[5]Finalize an Adoption\n[5]");
+            Console.WriteLine("[1] Add Animal");
+            Console.WriteLine("[2] Show Rooms & Occupants");
+            Console.WriteLine("[3] Track Innoculations");
+            Console.WriteLine("[4] Update Innoculation Status of an Animal");
+            Console.WriteLine("[5] Collect Payment");
+            Console.WriteLine();
             string userInput = Console.ReadLine();
             switch (userInput)
             {
@@ -35,8 +40,12 @@ namespace HumaneSociety
                     TrackInnoculations(facility);
                     break;
                 case "4":
-                    Animal animal = IdentifyAnimal(facility);
-                    CollectPayment(facility, animal);
+                    Animal updateThisAnimal = IdentifyAnimal(facility);
+                    SetAnimalInnoculationStatus(updateThisAnimal);
+                    break;
+                case "5":
+                    Animal collectForThisAnimal = IdentifyAnimal(facility);
+                    CollectPayment(facility, collectForThisAnimal);
                     break;
             }
         }
@@ -48,43 +57,55 @@ namespace HumaneSociety
             newAnimal = GetAnimalType();
             newAnimal.name = GetAnimalName();
             newAnimal.gender = GetAnimalGender();
-            newAnimal.innoculated = SetAnimalInnoculationStatus();
-            newAnimal.assignedRoom = AssignAnimalToRoom(facility.availableRooms);
+            newAnimal.innoculated = SetAnimalInnoculationStatus(newAnimal);
+            newAnimal.assignedRoom = AssignAnimalToRoom(facility);
             newAnimal.animalID++;
             //AddAnimalToDatabase(newAnimal);
+            Console.WriteLine("Animal added to system.");
+            ChooseAction(facility);
         }
 
-        private string AssignAnimalToRoom(List<Room> availableRooms)
+
+        private void ShowAvailableRooms(Facility facility)
         {
-            string assignedRoom = "";
             Console.WriteLine("Available rooms:");
-            foreach (Room room in availableRooms)
+            foreach (Room room in facility.availableRooms)
             {
                 Console.WriteLine(room.roomNumber);
             }
+        }
+
+
+    private void CheckForVacancy(Facility facility)
+        {
+            if (facility.availableRooms == null)
+            {
+                Console.WriteLine("Facility Full!  Please transfer to another facility.");
+                ChooseAction(facility);
+            }
+        }
+
+        private string AssignAnimalToRoom(Facility facility)
+        {
+            ShowAvailableRooms(facility);
+            CheckForVacancy(facility);
+            string assignedRoom = "";
             Console.WriteLine("Assign to Room:");
             string userInput = Console.ReadLine();
-            foreach (Room room in availableRooms)
+            for (int i = 0; i < facility.availableRooms.Count; i++) //(Room room in facility.availableRooms)
             {
-
-                if (availableRooms == null)
+                if (userInput == facility.availableRooms[i].roomNumber)//room.roomNumber)
                 {
-                    Console.WriteLine("Facility Full!  Please transfer to another facility.");
-                    assignedRoom = "";
+                    facility.availableRooms.Remove(facility.availableRooms[i]);
+                    facility.availableRooms[i].occupied = true;
+                    assignedRoom = facility.availableRooms[i].roomNumber;
+                    break;
                 }
-                else if (userInput == room.roomNumber)
-                {
-                    availableRooms.Remove(room);
-                    room.occupied = true;
-                    assignedRoom = room.roomNumber;
-                }
-
-                else
-                {
-                    Console.WriteLine("Room not available.  Please try again.");
-                    AssignAnimalToRoom(availableRooms);
-                    assignedRoom = "";
-                }
+            }
+            if (assignedRoom == "")
+            {
+                Console.WriteLine("Room not available. Please choose from list below.");
+                AssignAnimalToRoom(facility);
             }
             return assignedRoom;
         }
@@ -175,7 +196,7 @@ namespace HumaneSociety
             return gender;
         }
 
-        private bool SetAnimalInnoculationStatus()
+        private bool SetAnimalInnoculationStatus(Animal animal)
         {
             Console.WriteLine("Innoculation status: [1] Innoculated  [2] Not innoculated");
             string userInput = Console.ReadLine();
@@ -190,7 +211,7 @@ namespace HumaneSociety
                     break;
                 default:
                     Console.WriteLine("Invalid Entry.  Enter '1' or '2'");
-                    SetAnimalInnoculationStatus();
+                    SetAnimalInnoculationStatus(animal);
                     break;
             }
             return innoculated;
@@ -241,7 +262,7 @@ namespace HumaneSociety
             }
         }
 
-
+        
 
 
 

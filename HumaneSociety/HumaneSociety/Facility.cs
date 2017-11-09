@@ -40,7 +40,6 @@ namespace HumaneSociety
                 newInterface.CreateNewProfile();
                 newInterface.FindAPet(this);
             }
-            ShowAvilableRooms();
             //ShowRoomOccupation();
             //AddAnimal();
         }

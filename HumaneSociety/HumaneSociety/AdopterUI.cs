@@ -26,7 +26,7 @@ namespace HumaneSociety
             adopter.address = GetAddress();
             adopter.username = CreateUsername();
             adopter.password = CreatePassword();
-            AddAdopterToDatabase();
+            //AddAdopterToDatabase();
         }
 
         public void FindAPet(Facility facility)
